@@ -6,6 +6,10 @@ import '@/assets/style/css/reset.css'
 import router from '@/router'
 // 引入vuex
 import store from './store'
+// 引入Element-UI
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI)
 
 // 引入并注册全局组件
 

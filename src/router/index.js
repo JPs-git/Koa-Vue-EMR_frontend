@@ -6,6 +6,7 @@ Vue.use(VueRouter)
 // 引入路由组件
 import Home from '@/views/Home'
 import Admin from '@/views/Admin'
+import Login from '@/views/Login'
 // 备份原本的push、replace方法
 let originPush = VueRouter.prototype.push
 let originReplace = VueRouter.prototype.replace
@@ -42,6 +43,10 @@ export default new VueRouter({
     {
       path: '/home',
       component: Home,
+    },
+    {
+      path:'/login',
+      component: Login
     },
     {
       path: '/admin',
