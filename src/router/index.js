@@ -7,6 +7,9 @@ Vue.use(VueRouter)
 import Home from '@/views/Home'
 import Admin from '@/views/Admin'
 import Login from '@/views/Login'
+import Patient from '@/views/Patient'
+import NewPatient from '@/views/NewPatient'
+
 // 备份原本的push、replace方法
 let originPush = VueRouter.prototype.push
 let originReplace = VueRouter.prototype.replace
@@ -45,12 +48,20 @@ export default new VueRouter({
       component: Home,
     },
     {
-      path:'/login',
-      component: Login
+      path: '/login',
+      component: Login,
     },
     {
       path: '/admin',
       component: Admin,
+    },
+    {
+      path: '/patient',
+      component: Patient,
+    },
+    {
+      path: '/newpatient',
+      component: NewPatient,
     },
     // 重定向
     {
