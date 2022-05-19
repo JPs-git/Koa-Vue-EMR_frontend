@@ -4,9 +4,10 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 // 引入子模块
 import login from './login'
+import admin from './admin'
 
 // 对外暴露Store实例
 export default new Vuex.Store({
   // 模块化
-  modules: { login },
+  modules: { login, admin },
 })
