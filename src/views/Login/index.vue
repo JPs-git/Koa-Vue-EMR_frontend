@@ -3,14 +3,17 @@
     <div class="login-input">
       <div class="workId-input">
         <span>工号</span>
-        <el-input placeholder="请输入工号" v-model="workId"> </el-input>
+        <el-input placeholder="请输入工号" v-model="user.workNumber"> </el-input>
       </div>
       <div class="password-input">
         <span>密码</span>
-        <el-input placeholder="请输入密码" v-model="password" show-password>
+        <el-input placeholder="请输入密码" v-model="user.password" show-password>
         </el-input>
       </div>
-      <el-button type="primary" class="login-button" @click="login">登录</el-button>
+      <span class="err">{{ reason }}</span>
+      <el-button type="primary" class="login-button" @click="login"
+        >登录</el-button
+      >
     </div>
   </div>
 </template>
@@ -19,15 +22,24 @@
 export default {
   data() {
     return {
-      workId: '',
-      password: '',
+      user: {
+        workNumber: '',
+        password: '',
+      },
+      reason:''
     }
   },
-  methods:{
-    login(){
-      this.$store.dispatch('Test')
-    }
-  }
+  methods: {
+    async login() {
+      this.$store.dispatch('login', this.user).then(token =>{
+        // 登录成功 存储token 跳转至Home
+        localStorage.setItem('token', token)
+        this.$router.push('/home')
+      }).catch(reason => this.reason = reason)
+        
+        
+    },
+  },
 }
 </script>
 
@@ -40,9 +52,8 @@ export default {
   margin-right: auto;
   display: flex;
   flex-wrap: wrap;
-  justify-content:center;
-  align-items:center
-  
+  justify-content: center;
+  align-items: center;
 }
 .workId-input {
   width: 100%;
@@ -54,5 +65,8 @@ export default {
 }
 .login-button {
   margin: 0 auto;
+}
+.err{
+  color: red;
 }
 </style>

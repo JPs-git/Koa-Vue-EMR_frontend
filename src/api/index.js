@@ -10,4 +10,7 @@ export const reqCreateUser = (user) =>
   requests({ url: 'users/rigister', method: 'post', data: user })
 // 检查工号是否已注册接口
 export const reqCheckWorkNum = (workNumber) =>
-  requests({ url: 'users/checkworknum', method: 'post', data: {workNumber} })
+  requests({ url: 'users/checkworknum', method: 'post', data: { workNumber } })
+// 登录接口
+export const reqLogin = (data) =>
+  requests({ url: 'users/login', method: 'post', data })
