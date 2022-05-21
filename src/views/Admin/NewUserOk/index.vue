@@ -13,7 +13,7 @@ export default {
   name:'NewUserOk',
   methods:{
     goIndex(){
-      this.$router.push('/admin')
+      this.$router.push('/admin/user')
     }
   }
 }

@@ -12,6 +12,7 @@ import NewPatient from '@/views/NewPatient'
 import User from '@/views/Admin/User'
 import NewUser from '@/views/Admin/NewUser'
 import NewuUserOk from '@/views/Admin/NewUserOk'
+import ModifyUser from '@/views/Admin/ModifyUser'
 
 // 备份原本的push、replace方法
 let originPush = VueRouter.prototype.push
@@ -57,20 +58,25 @@ export default new VueRouter({
     {
       path: '/admin',
       component: Admin,
-      children:[
+      children: [
         {
-          path:'user',
-          component:User,
+          path: 'user',
+          component: User,
         },
         {
-          path:'newuser',
-          component:NewUser,
+          path: 'newuser',
+          component: NewUser,
         },
         {
-          path:'newuserok',
-          component:NewuUserOk,
-        }
-      ]
+          path: 'newuserok',
+          component: NewuUserOk,
+        },
+        {
+          path: 'modify',
+          name:'modify',
+          component: ModifyUser,
+        },
+      ],
     },
     {
       path: '/patient',
