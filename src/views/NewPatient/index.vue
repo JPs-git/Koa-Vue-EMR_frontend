@@ -328,29 +328,15 @@
 </template>
 
 <script>
+import Province from '@/assets/data/addr'
+
 export default {
   name: 'newPatient',
   data() {
     return {
       patient: {},
-      provinces: [
-        {
-          value: '辽宁省',
-          label: '辽宁省',
-          children: [
-            {
-              value: '铁岭市',
-              label: '铁岭市',
-              children: [
-                {
-                  value: '银州区',
-                  label: '银州区',
-                },
-              ],
-            },
-          ],
-        },
-      ],
+      provinces: Province,
+      
       departments: [
         {
           value: '外科',

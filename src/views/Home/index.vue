@@ -1,24 +1,36 @@
 <template>
   <div>
-    <div>请选择您的身份</div>
+    <div>{{ user.userInfo.name }}, 欢迎您</div>
     <el-row>
-      <el-button>门诊医生</el-button>
-      <el-button type="primary">住院医生</el-button>
-      <el-button type="success">护士</el-button>
+      <el-button type="primary" @click="goPatient">病案管理</el-button>
+      <el-button type="success">个人信息</el-button>
       <el-button type="info" @click="gotoLogin('/admin')">管理员</el-button>
-      
     </el-row>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  name:'Home',
-  methods:{
-    gotoLogin(path){
+  name: 'Home',
+
+  methods: {
+    gotoLogin(path) {
       this.$router.push(path)
+    },
+    goPatient(){
+      this.$router.push('/patient')
     }
-  }
+  },
+  computed: {
+    ...mapState(['user']),
+  },
+  mounted() {
+    this.$store
+      .dispatch('getUserInfo')
+      .then()
+      .catch((reason) => console.log(reason))
+  },
 }
 </script>
 

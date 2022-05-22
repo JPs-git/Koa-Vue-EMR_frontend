@@ -19,3 +19,5 @@ export const reqModifyUser = (modifiedUser) =>
 // 登录接口
 export const reqLogin = (data) =>
   requests({ url: 'users/login', method: 'post', data })
+// 查询用户信息接口
+export const reqUserInfo = () => requests({url:'users/current', method:'get'})

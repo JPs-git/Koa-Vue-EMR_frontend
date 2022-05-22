@@ -17,6 +17,8 @@ const requests = axios.create({
 requests.interceptors.request.use((config) => {
   nprogress.start() // 加载动画开始
   // 配置对象，其中headers请求头属性很重要
+  // 将token添加请求头
+  config.headers.Authorization = localStorage.getItem('token')
   return config
 })
 
