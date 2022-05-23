@@ -20,4 +20,10 @@ export const reqModifyUser = (modifiedUser) =>
 export const reqLogin = (data) =>
   requests({ url: 'users/login', method: 'post', data })
 // 查询用户信息接口
-export const reqUserInfo = () => requests({url:'users/current', method:'get'})
+export const reqUserInfo = () =>
+  requests({ url: 'users/current', method: 'get' })
+
+// patient相关接口
+// 新增patient接口
+export const reqNewPatient = (patient) =>
+  requests({ url: 'patients', method: 'post', data: patient })

@@ -23,8 +23,8 @@
         </el-col>
         <el-col :span="4">
           <div>
-            <el-radio v-model="patient.gender" label="男">男</el-radio>
-            <el-radio v-model="patient.gender" label="女">女</el-radio>
+            <el-radio v-model="patient.gender" label="male">男</el-radio>
+            <el-radio v-model="patient.gender" label="female">女</el-radio>
           </div>
         </el-col>
         <el-col :span="6">
@@ -76,6 +76,7 @@
           <el-cascader
             v-model="patient.birthPlace"
             :options="provinces"
+            filterable
           ></el-cascader>
         </el-col>
         <el-col :span="6">
@@ -83,6 +84,7 @@
           <el-cascader
             v-model="patient.origin"
             :options="provinces"
+            filterable
           ></el-cascader>
         </el-col>
         <el-col :span="6">
@@ -90,6 +92,7 @@
           <el-cascader
             v-model="patient.address"
             :options="provinces"
+            filterable
           ></el-cascader>
         </el-col>
         <el-col :span="6">
@@ -97,6 +100,7 @@
           <el-cascader
             v-model="patient.account"
             :options="provinces"
+            filterable
           ></el-cascader>
         </el-col>
       </el-row>
@@ -321,7 +325,7 @@
           </el-input>
         </el-col>
       </el-row>
-      <el-button type="primary">提交</el-button>
+      <el-button type="primary" @click="submitPatient">提交</el-button>
       {{ patient }}
     </div>
   </div>
@@ -351,6 +355,15 @@ export default {
       ],
     }
   },
+  methods:{
+    submitPatient(){
+      this.$store.dispatch('newPatient', this.patient).then(() => {
+          this.$router.push('/newpatientok')
+      }).catch((err) => {
+          console.log(err)
+      })
+    }
+  }
 }
 </script>
 

@@ -11,7 +11,6 @@ const actions = {
   // 登录请求
   async login({ commit }, data) {
     let result = await reqLogin(data)
-    console.log(result)
 
     return new Promise((resolve, reject) => {
       if (result.status === 200) {
