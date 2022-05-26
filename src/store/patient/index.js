@@ -17,18 +17,20 @@ const actions = {
   async findPatient({commit}, query){
     const result = await reqFindPatient(query)
     if(result.status === 200){
-      commit('FINDPATIENT',result.data.findResult)
+      commit('FINDPATIENT',result.data)
     }
   }
 }
 
 const mutations = {
-  FINDPATIENT(state, result){
-    state.Patients = result
+  FINDPATIENT(state, data){
+    state.Patients = data.findResult
+    state.total = data.total
   }
 }
 const state = {
-  Patients:[]
+  Patients:[],
+  total:0
 }
 const getters = {}
 export default {
