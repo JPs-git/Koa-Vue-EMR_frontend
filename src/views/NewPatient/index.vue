@@ -23,8 +23,8 @@
         </el-col>
         <el-col :span="4">
           <div>
-            <el-radio v-model="patient.gender" label="male">男</el-radio>
-            <el-radio v-model="patient.gender" label="female">女</el-radio>
+            <el-radio v-model="patient.gender" label="男">男</el-radio>
+            <el-radio v-model="patient.gender" label="女">女</el-radio>
           </div>
         </el-col>
         <el-col :span="6">

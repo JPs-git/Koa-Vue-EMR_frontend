@@ -60,7 +60,9 @@ export default {
     goNewPatient() {
       this.$router.push('/newpatient')
     },
-    showDetail() {},
+    showDetail(patient) {
+      this.$router.push({path:'/patientdetail',query:patient})
+    },
     removePatient() {},
     changePage(newpage) {
       this.findQuery.currentPage = newpage
