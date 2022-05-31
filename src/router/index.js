@@ -15,6 +15,7 @@ import NewuUserOk from '@/views/Admin/NewUserOk'
 import ModifyUser from '@/views/Admin/ModifyUser'
 import newPatientOk from '@/views/NewPatientOk'
 import PatientDetail from '@/views/PatientDetail'
+import ModifyPatient from '@/views/ModifyPatient'
 
 // 备份原本的push、replace方法
 let originPush = VueRouter.prototype.push
@@ -97,6 +98,11 @@ export default new VueRouter({
     {
       path:'/patientdetail',
       component:PatientDetail
+    },
+    {
+      path:'modifypatient',
+      name:'modifypatient',
+      component:ModifyPatient
     },
     // 重定向
     {

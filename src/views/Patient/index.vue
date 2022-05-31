@@ -63,7 +63,30 @@ export default {
     showDetail(patient) {
       this.$router.push({path:'/patientdetail',query:patient})
     },
-    removePatient() {},
+    removePatient(patient) {
+      this.$confirm('此操作将删除该病历, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          patient.isActive = false
+          this.$store.dispatch('modifyPatient', patient)
+        })
+        .then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!',
+          })
+          this.$store.dispatch('findPatient', this.findQuery)
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除',
+          })
+        })
+    },
     changePage(newpage) {
       this.findQuery.currentPage = newpage
       this.$store.dispatch('findPatient', this.findQuery)

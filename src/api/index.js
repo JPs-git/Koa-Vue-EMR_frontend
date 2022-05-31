@@ -30,3 +30,6 @@ export const reqNewPatient = (patient) =>
 // 查询patient接口
 export const reqFindPatient = (query) =>
   requests({ url: 'patients', method: 'get', params: query })
+// 修改patient接口
+export const reqModifyPatient = (update) =>
+  requests({ url: 'patients/modify', method: 'post', data: update })

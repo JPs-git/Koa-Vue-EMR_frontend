@@ -2,7 +2,7 @@
   <div>
     <el-descriptions class="margin-top" title="" :column="4" border>
       <template slot="extra">
-        <el-button type="primary" size="small">操作</el-button>
+        <el-button type="primary" @click="goModify">编辑</el-button>
       </template>
       <el-descriptions-item>
         <template slot="label">
@@ -225,9 +225,15 @@ export default {
       patient: this.$route.query,
     }
   },
-  mounted() {
-    console.log(this.$route.query)
+  methods:{
+    goModify(){
+      this.$router.push({
+        name:'modifypatient',
+        query:this.patient
+      })
+    }
   },
+
 }
 </script>
 
