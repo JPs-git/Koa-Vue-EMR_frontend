@@ -22,7 +22,7 @@ const actions = {
           reject(result.data.msg)
         }
       }else{
-        reject(new Error('login faile'))
+        reject(new Error('login error'))
       }
     })
     

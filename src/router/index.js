@@ -16,6 +16,8 @@ import ModifyUser from '@/views/Admin/ModifyUser'
 import newPatientOk from '@/views/NewPatientOk'
 import PatientDetail from '@/views/PatientDetail'
 import ModifyPatient from '@/views/ModifyPatient'
+import showAdmins from '@/views/Admin/Admin'
+import NewAdmin from '@/views/Admin/NewAdmin'
 
 // 备份原本的push、replace方法
 let originPush = VueRouter.prototype.push
@@ -79,6 +81,14 @@ export default new VueRouter({
           name:'modify',
           component: ModifyUser,
         },
+        {
+          path:'admin',
+          component:showAdmins
+        },
+        {
+          path:'newadmin',
+          component: NewAdmin
+        }
       ],
     },
     {

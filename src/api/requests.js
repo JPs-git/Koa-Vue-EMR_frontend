@@ -32,6 +32,7 @@ requests.interceptors.response.use(
   (err) => {
     // 失败的响应
     // return Promise.reject(new Error('faile'))
+    nprogress.done() // 加载动画结束
     return err
   }
 )

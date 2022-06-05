@@ -1,20 +1,14 @@
 <template>
   <div>
-    <el-table :data="userInfo" border style="width: 100%">
+    <el-table :data="admins" border style="width: 100%">
       <el-table-column prop="workNumber" label="工号" width="120">
       </el-table-column>
       <el-table-column prop="name" label="姓名" width="120"> </el-table-column>
-      <el-table-column prop="email" label="邮箱" width="120"> </el-table-column>
-
-      <el-table-column prop="permission" label="权限" width="120">
-      </el-table-column>
+      
 
       <el-table-column label="操作" width="100">
         <template slot-scope="scope">
-          <el-button @click="modifyInfo(scope.row)" type="text" size="small"
-            >修改</el-button
-          >
-          <el-button type="text" size="small" @click="removeUser(scope.row)"
+          <el-button type="text" size="small" @click="removeUser(scope.row.workNumber)"
             >删除</el-button
           >
         </template>
@@ -22,19 +16,19 @@
     </el-table>
     <el-pagination
       layout=" sizes, prev, pager, next, total, jumper"
-      :total="userTotal"
+      :total="adminTotal"
       :page-size="findQuery.pageSize"
       @current-change="changePage"
       @size-change="changeSize"
     >
     </el-pagination>
-    <el-button type="primary" @click="createUser">新增用户</el-button>
+    <el-button type="primary" @click="createUser">新增管理员</el-button>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'User',
+  name: 'Admins',
   data() {
     return {
       findQuery: {
@@ -45,7 +39,7 @@ export default {
   },
   methods: {
     createUser() {
-      this.$router.push('/admin/newuser')
+      this.$router.push('/admin/newadmin')
     },
     modifyInfo(originInfo) {
       const location = {
@@ -54,22 +48,21 @@ export default {
       }
       this.$router.push(location)
     },
-    removeUser(user) {
+    removeUser(workNumber) {
       this.$confirm('此操作将删除该用户, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
       })
         .then(() => {
-          user.isActive = false
-          this.$store.dispatch('modifyUser', user)
+          this.$store.dispatch('adminRemove', workNumber)
         })
         .then(() => {
           this.$message({
             type: 'success',
             message: '删除成功!',
           })
-          this.$store.dispatch('allUsers')
+          this.$store.dispatch('adminFind')
         })
         .catch(() => {
           this.$message({
@@ -88,15 +81,15 @@ export default {
     },
   },
   computed: {
-    userInfo() {
-      return this.$store.state.admin.userInfo
+    admins() {
+      return this.$store.state.admin.admins
     },
-    userTotal() {
-      return this.$store.state.admin.userTotal
+    adminTotal() {
+      return this.$store.state.admin.adminTotal
     },
   },
   mounted() {
-    this.$store.dispatch('allUsers', this.findQuery)
+    this.$store.dispatch('adminFind', this.findQuery)
   },
 }
 </script>

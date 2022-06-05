@@ -14,6 +14,9 @@
       <el-button type="primary" class="login-button" @click="login"
         >登录</el-button
       >
+      <el-button type="info" size="small" @click="adminLogin"
+        >管理员登录</el-button
+      >
     </div>
   </div>
 </template>
@@ -36,9 +39,14 @@ export default {
         localStorage.setItem('token', token)
         this.$router.push('/home')
       }).catch(reason => this.reason = reason)
-        
-        
     },
+    async adminLogin(){
+      this.$store.dispatch('adminLogin', this.user).then(token =>{
+        // 登录成功 存储token 跳转至Admin
+        localStorage.setItem('token', token)
+        this.$router.push('/admin/user')
+      }).catch(reason => this.reason = reason)
+    }
   },
 }
 </script>

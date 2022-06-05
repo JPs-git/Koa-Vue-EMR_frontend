@@ -1,12 +1,71 @@
 // 引入api
 import {
+  reqAdminRegister,
+  reqAdminLogin,
+  reqAdminFind,
   reqCreateUser,
   reqCheckWorkNum,
   reqAllUsers,
   reqModifyUser,
+  reqAdminCheckWorkNum,
+  reqAdminRemove,
 } from '@/api'
 
 const actions = {
+  // 注册管理员
+  async adminRegister({commit}, admin){
+    const result = await reqAdminRegister(admin)
+    return new Promise((resolve, reject) => {
+      if (result.status === 200) {
+        resolve(result)
+      } else {
+        reject(result)
+      }
+    })
+  },
+    // 检查工号是否已注册
+    async adminCheckWorkNum({ commit }, workNumber) {
+      let result = await reqAdminCheckWorkNum(workNumber)
+      if (result.status === 200) {
+        // console.log(result)
+        return result.data.isValid
+      }
+    },
+  // 管理员登录
+  async adminLogin({commit}, admin){
+    const result = await reqAdminLogin(admin)
+    return new Promise((resolve, reject) => {
+      if (result.status === 200) {
+        if (result.data.success) {
+          // 登录成功  存储token
+          resolve(result.data.token)
+        }else{
+          // 密码错误
+          reject(result.data.msg)
+        }
+      }else{
+        reject(new Error('login error'))
+      }
+    })
+  },
+  // 查询所有管理员
+  async adminFind({commit}, query){
+    let result = await reqAdminFind(query)
+    if (result.status === 200) {
+      commit('ADMINFIND', result.data)
+    }
+  },
+  // 停用管理员
+  async adminRemove({commit}, workNumber){
+    let result = await reqAdminRemove(workNumber)
+    return new Promise((resolve, reject) => {
+      if (result.status === 200) {
+        resolve(result)
+      } else {
+        reject(result)
+      }
+    })
+  },
   // 注册新用户
   async createUser({ commit }, user) {
     let result = await reqCreateUser(user)
@@ -28,10 +87,10 @@ const actions = {
   },
 
   // 查询所有用户
-  async allUsers({ commit }) {
-    let result = await reqAllUsers()
+  async allUsers({ commit }, query) {
+    let result = await reqAllUsers(query)
     if (result.status === 200) {
-      commit('ALLUSERS', result.data.findResult)
+      commit('ALLUSERS', result.data)
     }
   },
 
@@ -50,11 +109,19 @@ const actions = {
 }
 const mutations = {
   ALLUSERS(state, data) {
-    state.userInfo = data
+    state.userInfo = data.findResult
+    state.userTotal = data.total
   },
+  ADMINFIND(state, data){
+    state.admins = data.findResult,
+    state.adminTotal = data.total
+  }
 }
 const state = {
   userInfo: [],
+  userTotal:0,
+  admins:[],
+  adminTotal:0
 }
 const getters = {}
 export default {

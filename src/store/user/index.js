@@ -18,7 +18,9 @@ const actions = {
 const mutations = {
   // 存储用户信息
   GETUSERINFO(state, data){
+    
     state.userInfo = data
+
   }
 }
 const state = {
