@@ -51,5 +51,7 @@ export default {
 }
 .logout:hover{
   color: blue;
+  text-decoration:none;
+
 }
 </style>

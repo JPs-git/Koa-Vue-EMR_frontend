@@ -20,6 +20,9 @@ export const reqAdminFind = (query) =>
 // admin 停用接口
 export const reqAdminRemove = (workNumber) =>
   requests({ url: 'admins/remove', method: 'post', data:{workNumber} })
+// admin当前信息接口
+export const reqAdminCurrent = () =>
+  requests ({url:'admins/current', method:'get'})
 // 新增user接口
 export const reqCreateUser = (user) =>
   requests({ url: 'users/rigister', method: 'post', data: user })

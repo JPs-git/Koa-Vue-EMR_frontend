@@ -9,6 +9,7 @@ import {
   reqModifyUser,
   reqAdminCheckWorkNum,
   reqAdminRemove,
+  reqAdminCurrent,
 } from '@/api'
 
 const actions = {
@@ -66,6 +67,18 @@ const actions = {
       }
     })
   },
+  // 获取当前管理员信息
+  async adminCurrent({commit}){
+    let result = await reqAdminCurrent()
+    return new Promise((resolve, reject) => {
+      if (result.status === 200) {
+        commit('ADMINCURRENT', result.data)
+        resolve(result)
+      } else {
+        reject(result)
+      }
+    })
+  },
   // 注册新用户
   async createUser({ commit }, user) {
     let result = await reqCreateUser(user)
@@ -115,13 +128,17 @@ const mutations = {
   ADMINFIND(state, data){
     state.admins = data.findResult,
     state.adminTotal = data.total
+  },
+  ADMINCURRENT(state, data){
+    state.adminInfo = data
   }
 }
 const state = {
   userInfo: [],
   userTotal:0,
   admins:[],
-  adminTotal:0
+  adminTotal:0,
+  adminInfo:{}
 }
 const getters = {}
 export default {

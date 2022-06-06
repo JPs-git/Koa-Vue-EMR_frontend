@@ -110,7 +110,7 @@ export default new VueRouter({
       component:PatientDetail
     },
     {
-      path:'modifypatient',
+      path:'/modifypatient',
       name:'modifypatient',
       component:ModifyPatient
     },
