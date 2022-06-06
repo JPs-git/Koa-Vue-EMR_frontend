@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div id="login-root">
+    <div id="welcome">欢迎使用Koa-Vue-EMR!</div>
     <div class="login-input">
       <div class="workId-input">
         <span>工号</span>
@@ -52,6 +53,20 @@ export default {
 </script>
 
 <style scoped>
+#welcome{
+  font-size: 30px;
+  width: 20%;
+  margin: 0 auto;
+  position: relative;
+  top: 100px;
+}
+#login-root{
+  background-image: url("./backImg.jpg");
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  position: fixed;
+}
 .login-input {
   width: 25%;
   height: 170px;

@@ -1,6 +1,16 @@
 <template>
   <div>
     <div class="patient-table">
+      <div id="input">
+        <el-input
+          placeholder="输入患者姓名查找"
+          prefix-icon="el-icon-search"
+          v-model="queryName"
+          @keyup.enter.native="searchByName"
+        >
+        </el-input>
+      </div>
+
       <el-table :data="patients.Patients" border>
         <el-table-column prop="recordNum" label="病案号" width="280">
         </el-table-column>
@@ -29,11 +39,10 @@
         @size-change="changeSize"
       >
       </el-pagination>
+      <el-row>
+        <el-button type="primary" @click="goNewPatient">新增病人</el-button>
+      </el-row>
     </div>
-
-    <el-row>
-      <el-button type="primary" @click="goNewPatient">新增病人</el-button>
-    </el-row>
   </div>
 </template>
 
@@ -47,21 +56,29 @@ export default {
         pageSize: 10,
         currentPage: 1,
       },
+      queryName: '',
     }
+  },
+  watch: {
+    queryName() {
+      if (this.queryName === '') {
+        delete this.findQuery.name
+      } else {
+        this.findQuery.name = this.queryName
+      }
+    },
   },
   computed: {
     // 对象写法第二个参数是模块名
     // ...mapState({Patients:'patient'})
-    ...mapState(
-      { patients: (state) => state.patient },
-    ),
+    ...mapState({ patients: (state) => state.patient }),
   },
   methods: {
     goNewPatient() {
       this.$router.push('/newpatient')
     },
     showDetail(patient) {
-      this.$router.push({path:'/patientdetail',query:patient})
+      this.$router.push({ path: '/patientdetail', query: patient })
     },
     removePatient(patient) {
       this.$confirm('此操作将删除该病历, 是否继续?', '提示', {
@@ -93,6 +110,9 @@ export default {
     },
     changeSize(newsize) {
       this.findQuery.pageSize = newsize
+      this.$store.dispatch('findPatient', this.findQuery)
+    },
+    searchByName() {
       this.$store.dispatch('findPatient', this.findQuery)
     },
   },

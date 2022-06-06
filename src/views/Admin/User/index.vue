@@ -4,7 +4,7 @@
       <el-table-column prop="workNumber" label="工号" width="120">
       </el-table-column>
       <el-table-column prop="name" label="姓名" width="120"> </el-table-column>
-      <el-table-column prop="email" label="邮箱" width="120"> </el-table-column>
+      <el-table-column prop="email" label="邮箱" width="220"> </el-table-column>
 
       <el-table-column prop="permission" label="权限" width="120">
       </el-table-column>

@@ -4,8 +4,7 @@
     <a class="logout" href="javascript:;" @click="handleLogout">注销</a>
     <el-row>
       <el-button type="primary" @click="goPatient">病案管理</el-button>
-      <el-button type="success">个人信息</el-button>
-      <el-button type="info" @click="gotoLogin('/admin')">管理员</el-button>
+      <el-button type="success" @click="showInfo">个人信息</el-button>
     </el-row>
   </div>
 </template>
@@ -25,6 +24,9 @@ export default {
     handleLogout(){
       localStorage.setItem('token','')
       this.$router.push('/login')
+    },
+    showInfo(){
+      this.$router.push('/userinfo')
     }
   },
   computed: {

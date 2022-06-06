@@ -1,6 +1,8 @@
 // 引入
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import { reqAdminCurrent, reqUserInfo } from '../api/index'
+
 //使用插件
 Vue.use(VueRouter)
 // 引入路由组件
@@ -18,6 +20,7 @@ import PatientDetail from '@/views/PatientDetail'
 import ModifyPatient from '@/views/ModifyPatient'
 import showAdmins from '@/views/Admin/Admin'
 import NewAdmin from '@/views/Admin/NewAdmin'
+import UserInfo from '@/views/UserInfo'
 
 // 备份原本的push、replace方法
 let originPush = VueRouter.prototype.push
@@ -49,12 +52,13 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
   }
 }
 // 新建并暴露路由器
-export default new VueRouter({
+const router = new VueRouter({
   // 配置路由
   routes: [
     {
       path: '/home',
       component: Home,
+      meta: { autho: 'login' },
     },
     {
       path: '/login',
@@ -63,56 +67,70 @@ export default new VueRouter({
     {
       path: '/admin',
       component: Admin,
+      meta: { autho: 'admin' },
       children: [
         {
           path: 'user',
           component: User,
+          meta: { autho: 'admin' },
         },
         {
           path: 'newuser',
           component: NewUser,
+          meta: { autho: 'admin' },
         },
         {
           path: 'newuserok',
           component: NewuUserOk,
+          meta: { autho: 'admin' },
         },
         {
           path: 'modify',
-          name:'modify',
+          name: 'modify',
           component: ModifyUser,
+          meta: { autho: 'admin' },
         },
         {
-          path:'admin',
-          component:showAdmins
+          path: 'admin',
+          component: showAdmins,
+          meta: { autho: 'admin' },
         },
         {
-          path:'newadmin',
-          component: NewAdmin
-        }
+          path: 'newadmin',
+          component: NewAdmin,
+          meta: { autho: 'admin' },
+        },
       ],
     },
     {
       path: '/patient',
       component: Patient,
-     
+      meta: { autho: 'login' },
     },
     {
       path: '/newpatient',
       component: NewPatient,
-       
+      meta: { autho: 'doctor' },
     },
     {
-      path:'/newpatientok',
-      component:newPatientOk
+      path: '/newpatientok',
+      component: newPatientOk,
+      meta: { autho: 'doctor' },
     },
     {
-      path:'/patientdetail',
-      component:PatientDetail
+      path: '/patientdetail',
+      component: PatientDetail,
+      meta: { autho: 'login' },
     },
     {
-      path:'/modifypatient',
-      name:'modifypatient',
-      component:ModifyPatient
+      path: '/modifypatient',
+      name: 'modifypatient',
+      component: ModifyPatient,
+      meta: { autho: 'doctor' },
+    },
+    {
+      path:'/userinfo',
+      component:UserInfo
     },
     // 重定向
     {
@@ -121,3 +139,35 @@ export default new VueRouter({
     },
   ],
 })
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.autho) {
+    // 需要鉴权
+    let result = await reqUserInfo()
+    if (to.meta.autho === 'login') {
+      if (result.status === 200 && result.data.permission) {
+        next()
+      } else {
+        next('/login')
+      }
+    } else if (to.meta.autho === 'doctor') {
+      const permission = result.data.permission
+      if (permission === 'doctor') {
+        next()
+      } else {
+        next(from)
+      }
+    } else if (to.meta.autho === 'admin') {
+      const result = await reqAdminCurrent()
+      if (result.status === 200) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+    next()
+  }
+  // 不需要鉴权
+  next()
+})
+
+export default router
