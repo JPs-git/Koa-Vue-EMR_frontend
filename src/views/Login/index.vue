@@ -55,7 +55,7 @@ export default {
 <style scoped>
 #welcome{
   font-size: 30px;
-  width: 20%;
+  width: 380px;
   margin: 0 auto;
   position: relative;
   top: 100px;

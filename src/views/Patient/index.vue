@@ -1,5 +1,7 @@
 <template>
   <div>
+    <UserHeader id="header"></UserHeader>
+    <el-button class="goback" @click="cancel">返回</el-button>
     <div class="patient-table">
       <div id="input">
         <el-input
@@ -115,6 +117,9 @@ export default {
     searchByName() {
       this.$store.dispatch('findPatient', this.findQuery)
     },
+    cancel(){
+      this.$router.go(-1)
+    }
   },
   mounted() {
     this.$store.dispatch('findPatient', this.findQuery)
@@ -126,5 +131,11 @@ export default {
 .patient-table {
   width: 621px;
   margin: 0 auto;
+}
+.goback{
+  float: right;
+}
+#header{
+  float: left;
 }
 </style>

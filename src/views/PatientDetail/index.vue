@@ -2,7 +2,9 @@
   <div>
     <el-descriptions class="margin-top" title="" :column="4" border>
       <template slot="extra">
+        
         <el-button type="primary" @click="goModify">编辑</el-button>
+        <el-button  @click="cancel">返回</el-button>
       </template>
       <el-descriptions-item>
         <template slot="label">
@@ -231,6 +233,9 @@ export default {
         name:'modifypatient',
         query:this.patient
       })
+    },
+    cancel(){
+      this.$router.go(-1)
     }
   },
 

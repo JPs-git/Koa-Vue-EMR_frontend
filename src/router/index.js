@@ -58,79 +58,81 @@ const router = new VueRouter({
     {
       path: '/home',
       component: Home,
-      meta: { autho: 'login' },
+      meta: { autho: 'login', title: '首页' },
     },
     {
       path: '/login',
       component: Login,
+      meta: { title: '登录' },
     },
     {
       path: '/admin',
       component: Admin,
-      meta: { autho: 'admin' },
+      meta: { autho: 'admin', title: '管理员首页' },
       children: [
         {
           path: 'user',
           component: User,
-          meta: { autho: 'admin' },
+          meta: { autho: 'admin', title: '用户管理' },
         },
         {
           path: 'newuser',
           component: NewUser,
-          meta: { autho: 'admin' },
+          meta: { autho: 'admin', title: '添加新用户' },
         },
         {
           path: 'newuserok',
           component: NewuUserOk,
-          meta: { autho: 'admin' },
+          meta: { autho: 'admin', title: '成功！' },
         },
         {
           path: 'modify',
           name: 'modify',
           component: ModifyUser,
-          meta: { autho: 'admin' },
+          meta: { autho: 'admin', title: '修改用户信息' },
         },
         {
           path: 'admin',
           component: showAdmins,
-          meta: { autho: 'admin' },
+          meta: { autho: 'admin', title: '管理员管理' },
         },
         {
           path: 'newadmin',
           component: NewAdmin,
-          meta: { autho: 'admin' },
+          meta: { autho: 'admin', title: '添加新管理员' },
         },
       ],
     },
     {
       path: '/patient',
       component: Patient,
-      meta: { autho: 'login' },
+      meta: { autho: 'login', title: '病历管理' },
     },
     {
       path: '/newpatient',
       component: NewPatient,
-      meta: { autho: 'doctor' },
+      meta: { autho: 'doctor', title: '新增病历' },
     },
     {
       path: '/newpatientok',
       component: newPatientOk,
-      meta: { autho: 'doctor' },
+      meta: { autho: 'doctor', title: '成功！' },
     },
     {
       path: '/patientdetail',
       component: PatientDetail,
-      meta: { autho: 'login' },
+      meta: { autho: 'login', title: '病历详情' },
     },
     {
       path: '/modifypatient',
       name: 'modifypatient',
       component: ModifyPatient,
-      meta: { autho: 'doctor' },
+      meta: { autho: 'doctor', title: '修改病历' },
     },
     {
-      path:'/userinfo',
-      component:UserInfo
+      path: '/userinfo',
+      component: UserInfo,
+      meta: { autho: 'login', title: '用户信息' },
     },
     // 重定向
     {
@@ -140,6 +142,7 @@ const router = new VueRouter({
   ],
 })
 router.beforeEach(async (to, from, next) => {
+  window.document.title = to.meta.title == undefined ? '欢迎' : to.meta.title
   if (to.meta.autho) {
     // 需要鉴权
     let result = await reqUserInfo()

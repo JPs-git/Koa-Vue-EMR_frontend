@@ -12,6 +12,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI)
 
 // 引入并注册全局组件
+import UserHeader from '@/components/UserHeader'
+Vue.component(UserHeader.name, UserHeader)
 
 Vue.config.productionTip = false
 

@@ -29,7 +29,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit('ruleForm')">提交</el-button>
-        <el-button>取消</el-button>
+        <el-button @click="cancel">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -144,6 +144,9 @@ export default {
         }
       })
     },
+    cancel(){
+      this.$router.go(-1)
+    }
   },
 }
 </script>

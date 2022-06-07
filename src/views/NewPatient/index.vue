@@ -326,7 +326,7 @@
         </el-col>
       </el-row>
       <el-button type="primary" @click="submitPatient">提交</el-button>
-      {{ patient }}
+      <el-button @click="cancel">取消</el-button>
     </div>
   </div>
 </template>
@@ -362,6 +362,9 @@ export default {
       }).catch((err) => {
           console.log(err)
       })
+    },
+    cancel(){
+      this.$router.go(-1)
     }
   }
 }
