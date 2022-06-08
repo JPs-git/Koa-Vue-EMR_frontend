@@ -190,7 +190,7 @@
 
       <el-descriptions-item>
         <template slot="label"> 死亡患者尸检 </template>
-        {{ patient.autopsy }}
+        {{ autopsy }}
       </el-descriptions-item>
 
       <el-descriptions-item>
@@ -262,12 +262,39 @@ export default {
         this.patient.originArea
       )
     },
+    autopsy() {
+      return this.patient.autopsy === true ? '是' : '否'
+    },
   },
   methods: {
     goModify() {
       this.$router.push({
         name: 'modifypatient',
-        query: this.patient,
+        query: {
+          patient: this.patient,
+          places: {
+            birthPlace: [
+              this.patient.birthProvince,
+              this.patient.birthCity,
+              this.patient.birthArea,
+            ],
+            account: [
+              this.patient.accountProvince,
+              this.patient.accountCity,
+              this.patient.accountArea,
+            ],
+            address: [
+              this.patient.addrProvince,
+              this.patient.addrCity,
+              this.patient.addrArea,
+            ],
+            origin: [
+              this.patient.originProvince,
+              this.patient.oringinCity,
+              this.patient.originArea,
+            ],
+          },
+        },
       })
     },
     cancel() {
