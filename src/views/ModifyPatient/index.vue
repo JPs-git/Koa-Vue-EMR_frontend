@@ -33,6 +33,7 @@
             v-model="patient.birthDate"
             type="date"
             placeholder="选择日期"
+            value-format="yyyy-MM-dd"
           >
           </el-date-picker>
         </el-col>
@@ -74,7 +75,7 @@
         <el-col :span="6">
           <span>出生地 </span>
           <el-cascader
-            v-model="patient.birthPlace"
+            v-model="places.birthPlace"
             :options="provinces"
             filterable
           ></el-cascader>
@@ -82,7 +83,7 @@
         <el-col :span="6">
           <span>籍贯 </span>
           <el-cascader
-            v-model="patient.origin"
+            v-model="places.origin"
             :options="provinces"
             filterable
           ></el-cascader>
@@ -90,7 +91,7 @@
         <el-col :span="6">
           <span>现住址 </span>
           <el-cascader
-            v-model="patient.address"
+            v-model="places.address"
             :options="provinces"
             filterable
           ></el-cascader>
@@ -98,7 +99,7 @@
         <el-col :span="6">
           <span>户口地址 </span>
           <el-cascader
-            v-model="patient.account"
+            v-model="places.account"
             :options="provinces"
             filterable
           ></el-cascader>
@@ -106,7 +107,7 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="8">
-          <el-input v-model="patient.Phone" placeholder="请输入内容">
+          <el-input v-model="patient.phone" placeholder="请输入内容">
             <template slot="prepend">电话</template>
           </el-input>
         </el-col>
@@ -161,7 +162,7 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="6">
-          <el-input v-model="patient.contactName" placeholder="请输入内容">
+          <el-input v-model="patient.contact" placeholder="请输入内容">
             <template slot="prepend">联系人姓名</template>
           </el-input>
         </el-col>
@@ -278,15 +279,15 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-input placeholder="请输入内容" v-model="patient.allergic">
+          <el-input placeholder="请输入内容" v-model="patient.allergies">
             <template slot="prepend">药物过敏</template>
           </el-input>
         </el-col>
         <el-col :span="6">
           <span>死亡患者尸检 </span>
           <el-radio-group v-model="patient.autopsy">
-            <el-radio label="是"></el-radio>
-            <el-radio label="否"></el-radio>
+            <el-radio :label="true">是</el-radio>
+            <el-radio :label="false">否</el-radio>
           </el-radio-group>
         </el-col>
       </el-row>
@@ -315,17 +316,18 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="6">
-          <el-input placeholder="请输入内容" v-model="patient.attending">
+          <el-input placeholder="请输入内容" v-model="patient.attendingName">
             <template slot="prepend">主治医师</template>
           </el-input>
         </el-col>
         <el-col :span="6">
-          <el-input placeholder="请输入内容" v-model="patient.resNurse">
+          <el-input placeholder="请输入内容" v-model="patient.resNurseName">
             <template slot="prepend">责任护士</template>
           </el-input>
         </el-col>
       </el-row>
       <el-button type="primary" @click="submitPatient">提交</el-button>
+      <el-button @click="cancel">取消</el-button>
     </div>
   </div>
 </template>
@@ -339,6 +341,7 @@ export default {
     return {
       patient: this.$route.query,
       provinces: Province,
+      places: {},
 
       departments: [
         {
@@ -365,10 +368,59 @@ export default {
           console.log(err)
         })
     },
+    cancel() {
+      this.$router.go(-1)
+    },
   },
-  mounted() {
-    console.log(this.$route.query)
+  watch: {
+    places: {
+      deep: true,
+      handler() {
+        // 将数组拆分赋值给病人对象
+        // 出生地
+        this.patient.birthProvince = this.places.birthPlace
+          ? this.places.birthPlace[0]
+          : ''
+        this.patient.birthCity = this.places.birthPlace
+          ? this.places.birthPlace[1]
+          : ''
+        this.patient.birthArea = this.places.birthPlace
+          ? this.places.birthPlace[2]
+          : ''
+        // 籍贯
+        this.patient.originProvince = this.places.origin
+          ? this.places.origin[0]
+          : ''
+        this.patient.oringinCity = this.places.origin
+          ? this.places.origin[1]
+          : ''
+        this.patient.originArea = this.places.origin
+          ? this.places.origin[2]
+          : ''
+        // 现住址
+        this.patient.addrProvince = this.places.address
+          ? this.places.address[0]
+          : ''
+        this.patient.addrCity = this.places.address
+          ? this.places.address[1]
+          : ''
+        this.patient.addrArea = this.places.address
+          ? this.places.address[2]
+          : ''
+        // 户口地址
+        this.patient.accountProvince = this.places.account
+          ? this.places.account[0]
+          : ''
+        this.patient.accountCity = this.places.account
+          ? this.places.account[1]
+          : ''
+        this.patient.accountArea = this.places.account
+          ? this.places.account[2]
+          : ''
+      },
+    },
   },
+  mounted() {},
 }
 </script>
 

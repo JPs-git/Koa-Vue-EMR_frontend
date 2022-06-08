@@ -2,9 +2,8 @@
   <div>
     <el-descriptions class="margin-top" title="" :column="4" border>
       <template slot="extra">
-        
         <el-button type="primary" @click="goModify">编辑</el-button>
-        <el-button  @click="cancel">返回</el-button>
+        <el-button @click="cancel">返回</el-button>
       </template>
       <el-descriptions-item>
         <template slot="label">
@@ -23,12 +22,12 @@
         <template slot="label"> 健康卡号 </template>
         {{ patient.healthCardNum }}
       </el-descriptions-item>
-      
+
       <el-descriptions-item>
-        <template slot="label"> 出生日期  </template>
+        <template slot="label"> 出生日期 </template>
         {{ patient.birthDate }}
       </el-descriptions-item>
-      
+
       <el-descriptions-item>
         <template slot="label"> 国籍 </template>
         {{ patient.country }}
@@ -56,27 +55,27 @@
 
       <el-descriptions-item>
         <template slot="label"> 出生地 </template>
-        {{ patient.birthPlace }}
+        {{ birthPlace }}
       </el-descriptions-item>
 
       <el-descriptions-item>
         <template slot="label"> 籍贯 </template>
-        {{ patient.origin }}
+        {{ origin }}
       </el-descriptions-item>
 
       <el-descriptions-item>
         <template slot="label"> 现住址 </template>
-        {{ patient.address }}
+        {{ address }}
       </el-descriptions-item>
 
       <el-descriptions-item>
         <template slot="label"> 户口地址 </template>
-        {{ patient.account }}
+        {{ account }}
       </el-descriptions-item>
 
       <el-descriptions-item>
         <template slot="label"> 电话 </template>
-        {{ patient.Phone }}
+        {{ patient.phone }}
       </el-descriptions-item>
 
       <el-descriptions-item>
@@ -121,7 +120,7 @@
 
       <el-descriptions-item>
         <template slot="label"> 联系人姓名 </template>
-        {{ patient.contactName }}
+        {{ patient.contact }}
       </el-descriptions-item>
 
       <el-descriptions-item>
@@ -186,7 +185,7 @@
 
       <el-descriptions-item>
         <template slot="label"> 药物过敏 </template>
-        {{ patient.allergic }}
+        {{ patient.allergies }}
       </el-descriptions-item>
 
       <el-descriptions-item>
@@ -206,15 +205,13 @@
 
       <el-descriptions-item>
         <template slot="label"> 主治医师 </template>
-        {{ patient.attending }}
+        {{ patient.attendingName }}
       </el-descriptions-item>
 
       <el-descriptions-item>
         <template slot="label"> 责任护士 </template>
-        {{ patient.resNurse }}
+        {{ patient.resNurseName }}
       </el-descriptions-item>
-
-      
     </el-descriptions>
   </div>
 </template>
@@ -223,22 +220,61 @@
 export default {
   name: 'PatientDetail',
   data() {
-    return {
-      patient: this.$route.query,
-    }
+    return {}
   },
-  methods:{
-    goModify(){
+  computed: {
+    patient() {
+      return JSON.parse(this.$route.query.patient)
+    },
+    birthPlace() {
+      return (
+        this.patient.birthProvince +
+        ' ' +
+        this.patient.birthCity +
+        ' ' +
+        this.patient.birthArea
+      )
+    },
+    account() {
+      return (
+        this.patient.accountProvince +
+        ' ' +
+        this.patient.accountCity +
+        ' ' +
+        this.patient.accountArea
+      )
+    },
+    address() {
+      return (
+        this.patient.addrProvince +
+        ' ' +
+        this.patient.addrCity +
+        ' ' +
+        this.patient.addrArea
+      )
+    },
+    origin() {
+      return (
+        this.patient.originProvince +
+        ' ' +
+        this.patient.oringinCity +
+        ' ' +
+        this.patient.originArea
+      )
+    },
+  },
+  methods: {
+    goModify() {
       this.$router.push({
-        name:'modifypatient',
-        query:this.patient
+        name: 'modifypatient',
+        query: this.patient,
       })
     },
-    cancel(){
+    cancel() {
       this.$router.go(-1)
-    }
+    },
   },
-
+  mounted() {},
 }
 </script>
 

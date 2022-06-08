@@ -80,7 +80,12 @@ export default {
       this.$router.push('/newpatient')
     },
     showDetail(patient) {
-      this.$router.push({ path: '/patientdetail', query: patient })
+      // 将对象转为JSON后才能通过query传参，否则属性值会被强制转为String
+      // 接收时再调用parse转回对象
+      this.$router.push({
+        path: '/patientdetail',
+        query: { patient: JSON.stringify(patient) },
+      })
     },
     removePatient(patient) {
       this.$confirm('此操作将删除该病历, 是否继续?', '提示', {
@@ -117,9 +122,9 @@ export default {
     searchByName() {
       this.$store.dispatch('findPatient', this.findQuery)
     },
-    cancel(){
-      this.$router.go(-1)
-    }
+    cancel() {
+      this.$router.push('/home')
+    },
   },
   mounted() {
     this.$store.dispatch('findPatient', this.findQuery)
@@ -132,10 +137,10 @@ export default {
   width: 621px;
   margin: 0 auto;
 }
-.goback{
+.goback {
   float: right;
 }
-#header{
+#header {
   float: left;
 }
 </style>
