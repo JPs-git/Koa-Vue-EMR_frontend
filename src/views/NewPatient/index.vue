@@ -249,7 +249,7 @@
             </el-option>
           </el-select>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="6">
           <el-input v-model="patient.totalDays">
             <template slot="prepend">实际住院</template>
             <template slot="append">天</template>

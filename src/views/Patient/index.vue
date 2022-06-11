@@ -74,6 +74,9 @@ export default {
     // 对象写法第二个参数是模块名
     // ...mapState({Patients:'patient'})
     ...mapState({ patients: (state) => state.patient }),
+    permission() {
+      return this.$store.state.user.userInfo.permission
+    },
   },
   methods: {
     goNewPatient() {
@@ -88,28 +91,32 @@ export default {
       })
     },
     removePatient(patient) {
-      this.$confirm('此操作将删除该病历, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-      })
-        .then(() => {
-          patient.isActive = false
-          this.$store.dispatch('modifyPatient', patient)
+      if (this.permission === 'doctor') {
+        this.$confirm('此操作将删除该病历, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
         })
-        .then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!',
+          .then(() => {
+            patient.isActive = false
+            this.$store.dispatch('modifyPatient', patient)
           })
-          this.$store.dispatch('findPatient', this.findQuery)
-        })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除',
+          .then(() => {
+            this.$message({
+              type: 'success',
+              message: '删除成功!',
+            })
+            this.$store.dispatch('findPatient', this.findQuery)
           })
-        })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除',
+            })
+          })
+      }else{
+        return
+      }
     },
     changePage(newpage) {
       this.findQuery.currentPage = newpage
